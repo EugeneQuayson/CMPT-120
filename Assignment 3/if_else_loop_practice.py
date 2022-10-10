@@ -1,5 +1,5 @@
 def main():
-    numbers = [11, 31, 23, 27, 44, 38, 32, 42]
+    numbers = [11, 15, 23, 27, 44, 38, 32, 42]
     for x in numbers:
         if x > 35:
             print(x, "is greater than 35")
