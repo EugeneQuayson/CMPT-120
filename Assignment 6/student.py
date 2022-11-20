@@ -1,38 +1,35 @@
-#oo scary
-'''
-Instructions:
-We're now experts at classes, right?
-Yeah?
-mkay so do me a favor
-Create the class student
-every student has these traits:
-name
-student id (you can pick this number arbitrarily)
-year (f/s/j/s)
-major
-gpa
+import random
 
-create a function to see if the student is eligible for the honors program
-to be eligible they need to have a gpa above 3.5
-return true if they can and false if they cant, and print it out
 
-create a function because this college is a wacky one- every day they generate a student id and if the student id matches a student, that student gets free food that day. 
-1. generate a random number the length of however long you choose to make the id number
-2. compare if the random number matches your student's id
-3. if it matches print out "winner! student (name) gets free lunch!"
-4. if not, print "Loser!"
-(disclosure: obviously there's a very small chance of your generated number matching the student id number. I just want to see that you're generating and comparing properly)
-'''
+class Student:
+    def __init__(self, name, student_id, year, major, gpa):
+        self.name = name
+        self.student_id = student_id
+        self.year = year
+        self.major = major
+        self.gpa = float(gpa)
 
-class student:
-    
-    
-    
-    
-    
-    
+    def honors(self):
+        if self.gpa > float(3.5):
+            return True
+        else:
+            return False
+
+    def free(self):
+        winning_number = random.randint(1, 10)
+        if winning_number == self.student_id:
+            return "Winner!", self.name, "gets free lunch!"
+        else:
+            return "Loser!"
+
+
 def main():
-    #create three students and check if they get free lunch and if they qualify for honors
-    
-    
+    student1 = Student("Dylan", 1, "Freshman", "Comp Sci", float(3.6))
+    student2 = Student("Oscar", 2, "Sophomore", "Business", float(3.3))
+    student3 = Student("Daniel", 3, "Junior", "Dev Sci", float(2.5))
+    print(student1.name, student1.honors(), student1.free())
+    print(student2.name, student2.honors(), student2.free())
+    print(student3.name, student3.honors(), student3.free())
+
+
 main()
