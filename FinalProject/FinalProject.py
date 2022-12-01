@@ -1,92 +1,124 @@
-k phase
 import random
 
-yes = ['yes', 'y']
-no = ['no', 'n']
 
+class TicTacToe:
 
-def attack_power():
-    damage = random.randint(1, max_char_str)
-    return damage
+    def __init__(self):
+        self.board = []
 
+    def create_board(self):
+        for i in range(3):
+            row = []
+            for j in range(3):
+                row.append('-')
+            self.board.append(row)
 
-def attack1_level1():
-    enemy_defense = 10
-    enemy_health = 10
-    overall_defense = enemy_defense + enemy_health
-    attack_phase = overall_defense - attack_power()
-    print("The goblin has", overall_defense, "defense")
-    print("You attack for", attack_power())
-    if attack_phase <= 0:
-        print("You killed the goblin!")
-        return True
-    else:
-        print("He's still alive with", attack_phase, "health!")
+    def get_random_first_player(self):
+        return random.randint(0, 1)
+
+    def fix_spot(self, row, col, player):
+        self.board[row][col] = player
+
+    def is_player_win(self, player):
+        win = None
+
+        n = len(self.board)
+
+        # checking rows
+        for i in range(n):
+            win = True
+            for j in range(n):
+                if self.board[i][j] != player:
+                    win = False
+                    break
+            if win:
+                return win
+
+        # checking columns
+        for i in range(n):
+            win = True
+            for j in range(n):
+                if self.board[j][i] != player:
+                    win = False
+                    break
+            if win:
+                return win
+
+        # checking diagonals
+        win = True
+        for i in range(n):
+            if self.board[i][i] != player:
+                win = False
+                break
+        if win:
+            return win
+
+        win = True
+        for i in range(n):
+            if self.board[i][n - 1 - i] != player:
+                win = False
+                break
+        if win:
+            return win
         return False
 
+        for row in self.board:
+            for item in row:
+                if item == '-':
+                    return False
+        return True
 
-def min_char_def():
-    if max_char_def > 10:
-        minimum_char_def = max_char_def - 10
-        return minimum_char_def
-    else:
-        minimum_char_def = random.randint(1, max_char_def)
-        return minimum_char_def
+    def is_board_filled(self):
+        for row in self.board:
+            for item in row:
+                if item == '-':
+                    return False
+        return True
 
+    def swap_player_turn(self, player):
+        return 'X' if player == 'O' else 'O'
 
-def damage_taken(x):
-    char_def = random.randint(min_char_def(), max_char_def)
-    true_damage = x - char_def
-    print("Damage Taken: ", true_damage)
-    print(char_name, "'s Defense: ", char_def)
-    if true_damage >= 0:
-        remaining_health = start_char_health - true_damage
-        print("Remaining Health: ", remaining_health)
-    else:
-        new_def = max_char_def - true_damage
-        print("Shield: ", new_def)
+    def show_board(self):
+        for row in self.board:
+            for item in row:
+                print(item, end=" ")
+            print()
 
+    def start(self):
+        self.create_board()
 
-char_name = input("Enter your name: ")
-max_char_str = 100
-max_char_def = 50
-start_char_health = 100
-print("Health: ", start_char_health)
-print("Shield: ", max_char_def)
+        player = 'X' if self.get_random_first_player() == 1 else 'O'
+        while True:
+            print(f"Player {player} turn")
 
+            self.show_board()
 
-def level1():
-    def enemy1_level1():
-        damage = random.randint(1, 20)
-        print("You enter a cave and inside lies a goblin.", "He attacks you doing", damage, "damage")
-        return damage
+            # taking user input
+            row, col = list(
+                map(int, input("Enter row and column numbers to fix spot: ").split()))
+            print()
 
-    while True:
-        fight1_level1 = input("Would you like to fight? ")
-        if fight1_level1.lower() in yes:
-            damage_taken(enemy1_level1())
-            break
-        elif fight1_level1.lower() in no:
-            print("Too bad!")
-            damage_taken(enemy1_level1())
-            break
-        else:
-            print("yes or no")
+            # fixing the spot
+            self.fix_spot(row - 1, col - 1, player)
 
-    attack1_level1_option = input("Do you attack? ")
-    if attack1_level1_option.lower() in yes:
-        print("You strike back!")
-        attack1_level1()
-    elif attack1_level1_option.lower() in no:
-        print("You have no choice")
-        attack1_level1()
+            # checking whether current player is won or not
+            if self.is_player_win(player):
+                print(f"Player {player} wins the game!")
+                break
 
-    if attack1_level1() is True:
-        print("You win the game!")
-        print("Thanks for playing")
-    elif attack1_level1() is False:
-        print("You run out of the cave screaming!")
-        print("Maybe you'll get him next time")
+            # checking whether the game is draw or not
+            if self.is_board_filled():
+                print("Match Draw!")
+                break
+
+            # swapping the turn
+            player = self.swap_player_turn(player)
+
+        # showing the final view of board
+        print()
+        self.show_board()
 
 
-level1()
+# starting the game
+tic_tac_toe = TicTacToe()
+tic_tac_toe.start()
