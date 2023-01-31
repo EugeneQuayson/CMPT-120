@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class NumberCount
+{
+public static void main (String[] args)
+{
+int sum=0,count=0,pos=0,neg=0;
+float avg;
+Scanner sc=new Scanner(System.in);
+System.out.println("Enter an integer, the input ends if it is 0: ");
+int num=sc.nextInt();
+if(num!=0)
+{
+while(num!=0)
+{
+sum=sum+num;
+count++;
+if(num>0)
+pos++;
+else
+neg++;
+num=sc.nextInt();
+}
+avg=(float)sum/count;
+System.out.println("The number of positive is "+pos);
+System.out.println("The number of negative is "+neg);
+System.out.println("The total is "+sum);
+System.out.println("The average is "+avg);
+}
+else
+{
+System.out.println("No numbers are entered except 0");
+}
+
+}
+}
